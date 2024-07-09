@@ -104,7 +104,7 @@ const Search: React.FC<SearchProps> = ({ country = 'defaultCountryCode' }) => {
                     <button type="submit" className='w-24 h-12 font-semibold rounded-xl border-2 border-black hover:bg-custom-black trasition duration-300 hover:text-white'>Search</button>
                 </div>
             </form>
-            <List tenders={tenders} />
+            <List tenders={tenders}/>
         </>
     );
 }

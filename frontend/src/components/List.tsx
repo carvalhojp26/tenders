@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Table from './Table'
+import Pagination from './Pagination'
 
 interface ListProps {
     tenders: {
@@ -7,43 +9,24 @@ interface ListProps {
     }[]
 }
 
-export default function List ({tenders}:ListProps) {
+export default function List ({tenders}: ListProps) {
     const [currentPage, setCurrentPage] = useState(1)
-    const tendersPerPage = 10
+    const tendersPerPage = 15
 
     const indexOfLastTender = currentPage * tendersPerPage
     const indexOfFirstTender = indexOfLastTender - tendersPerPage
-    const currentTenders = tenders.slice(indexOfFirstTender)
-
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
+    const currentTenders = tenders.slice(indexOfFirstTender, indexOfLastTender)
 
     const pageCount = Math.ceil(tenders.length / tendersPerPage)
 
+    function handlePageChange (page: number) {
+        setCurrentPage(page)
+    }
+
     return (
-        <div className='ml-4  w-[1540px] mt-8 rounded-xl border border-custom-gray overflow-hidden bg-white h-[640px]'>
-            <table>
-                <thead className='bg-gray-200 w-full h-10'>
-                    <tr>
-                        <th>Title</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentTenders.map((tenders, index) => (
-                        <tr key={index} className='h-10 border-b border-custom-gray'>
-                            <td className='pl-4'>{tenders.title}</td>
-                            <td className='pr-4'>{tenders.date}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className=''>
-                {Array.from({length: pageCount}, (_, i) => i + 1).map(number => (
-                    <button key={number} onClick={() => paginate(number)} className=''>
-                        {number}
-                    </button>
-                ))}
-            </div>
+        <div>
+            <Table tenders={currentTenders} />
+            <Pagination pageCount={pageCount} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
-    )
+    );
 }
