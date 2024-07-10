@@ -7,7 +7,7 @@ interface cardProps {
 export default function Card ( {icon, title, content}:cardProps) {
     return (
         <>
-          <div className="border border-custom-gray w-full w-96 h-32 rounded-lg bg-white p-2 flex m-4">
+          <div className="border border-custom-gray w-96 h-32 rounded-lg bg-white p-2 flex m-4">
             <div className="w-12 h-12 bg-black rounded-lg flex items-center justify-center mt-1">
               {icon}
             </div>
