@@ -8,12 +8,13 @@ export class TendersController {
     @Get(':country')
     async getTendersData(
         @Param('country') country: string,
+        @Query('page') page:number,
         @Query('title') title?: string,
         @Query('category') category?: string,
         @Query('date') date?: 'asc' | 'desc',
         @Query('value') value?: 'asc' | 'desc'
     ) {
-        const data = await this.externalApiService.fetchTendersData(country, title, category, date, value).toPromise()
+        const data = await this.externalApiService.fetchTendersData(country, page, title, category, date, value).toPromise()
 
         return data
     }

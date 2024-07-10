@@ -17,7 +17,7 @@ export default function Pagination ({pageCount, currentPage, onPageChange}:Pagin
             const startPages = [1,2,3,4,5]
             const endPages = [pageCount - 4, pageCount - 3, pageCount - 2, pageCount - 1, pageCount]
 
-            if(currentPage < 6) {
+            if(currentPage < 5) {
                 pages.push(...startPages, '...', pageCount)
             } else if (currentPage < pageCount - 2) {
                 pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', pageCount )
@@ -31,7 +31,7 @@ export default function Pagination ({pageCount, currentPage, onPageChange}:Pagin
     }
 
     return (
-        <div>
+        <div className="mt-2 mb-16">
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}

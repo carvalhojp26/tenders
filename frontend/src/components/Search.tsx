@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import axios from 'axios';
 import Dropdown from './Dropdown';
 import List from './List';
@@ -8,39 +8,48 @@ interface SearchProps {
 }
 
 interface Tender {
-    title: string;
-    date: string;
+    title?: string;
+    date?: string;
+    deadline?: string;
+    deadlineLength?: number;
+    category?: string;
+    srcURL?: string;
+    supplier?: string;
+    value?: string;
 }
 
-const Search: React.FC<SearchProps> = ({ country = 'defaultCountryCode' }) => {
-    const [title, setTitle] = useState<string>('');
-    const [category, setCategory] = useState<string>('No filter');
-    const [date, setDate] = useState<string>('No filter');
-    const [price, setPrice] = useState<string>('No filter');
+export default function Search({ country }: SearchProps) {
+    const [title, setTitle] = useState('');
+    const [category, setCategory] = useState('No filter');
+    const [date, setDate] = useState('No filter');
+    const [price, setPrice] = useState('No filter');
     const [tenders, setTenders] = useState<Tender[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [apiPage, setApiPage] = useState(0);
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        fetchTenders();
+        const newApiPage = Math.floor((currentPage - 1) / 10);
+        if (newApiPage !== apiPage) {
+            setApiPage(newApiPage);
+            fetchTenders(newApiPage + 1);
+        }
+    }, [currentPage, apiPage]);
+
+    useEffect(() => {
+        fetchTenders(1);
     }, []);
 
-    const fetchTenders = async () => {
-        const apiUrl = `http://localhost:3000/${country}`;
-        try {
-            const response = await axios.get(apiUrl);
-            console.log(response.data)
-            setTenders(response.data.map((tender: Tender) => ({
-                title: tender.title,
-                date: tender.date
-            })));
-        } catch (error) {
-            console.error('Erro na busca inicial: ', error);
+    const fetchTenders = async (page: number) => {
+        if(!country) {
+            return setError('Please select a country')
         }
-    };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+        setLoading(true)
         const apiUrl = `http://localhost:3000/${country}`;
         const params = {
+            page,
             title: title || undefined,
             category: category !== 'No filter' ? category : undefined,
             date: date !== 'No filter' ? date : undefined,
@@ -49,13 +58,21 @@ const Search: React.FC<SearchProps> = ({ country = 'defaultCountryCode' }) => {
 
         try {
             const response = await axios.get(apiUrl, { params });
-            setTenders(response.data.map((tender: Tender) => ({
-                title: tender.title,
-                date: tender.date
-            })));
+            setTenders(response.data);
         } catch (error) {
-            console.error("Erro ao filtrar dados:", error);
+            console.error("Error fetching data:", error);
+            setError('No Results')
         }
+        setLoading(false)
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setCurrentPage(newPage);
+    };
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        fetchTenders(1);
     };
 
     return (
@@ -104,9 +121,7 @@ const Search: React.FC<SearchProps> = ({ country = 'defaultCountryCode' }) => {
                     <button type="submit" className='w-24 h-12 font-semibold rounded-xl border-2 border-black hover:bg-custom-black trasition duration-300 hover:text-white'>Search</button>
                 </div>
             </form>
-            <List tenders={tenders}/>
+            <List tenders={tenders} currentPage={currentPage} onPageChange={handlePageChange} error={error} loading={loading}/>
         </>
     );
 }
-
-export default Search;

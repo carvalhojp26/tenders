@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 export class ExternalApiService {
     constructor(private readonly httpService: HttpService) {}
 
-    fetchTendersData(country: string, title?: string, category?: string, date?: 'asc' | 'desc', value?: 'asc' | 'desc'): Observable<any> {
+    fetchTendersData(country: string, page:number, title?: string, category?: string, date?: 'asc' | 'desc', value?: 'asc' | 'desc'): Observable<any> {
         const url = `https://tenders.guru/api/${country}/tenders`;
         let params = {};
         if (title) params['title'] = title;
+        if (page) params['page'] = page
         if (category) params['category'] = category;
 
         return this.httpService.get(url, { params }).pipe(

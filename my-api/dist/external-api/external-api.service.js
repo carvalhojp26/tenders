@@ -17,11 +17,13 @@ let ExternalApiService = class ExternalApiService {
     constructor(httpService) {
         this.httpService = httpService;
     }
-    fetchTendersData(country, title, category, date, value) {
+    fetchTendersData(country, page, title, category, date, value) {
         const url = `https://tenders.guru/api/${country}/tenders`;
         let params = {};
         if (title)
             params['title'] = title;
+        if (page)
+            params['page'] = page;
         if (category)
             params['category'] = category;
         return this.httpService.get(url, { params }).pipe((0, operators_1.map)(response => {
