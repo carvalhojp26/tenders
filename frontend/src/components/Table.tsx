@@ -64,8 +64,8 @@ export default function Table({ tenders, error, loading, handleClick }: TablePro
                     </thead>
                     <tbody>
                         {tenders.length > 0 ? tenders.map((tender, index) => (
-                            <tr key={index} className={`border-b border-custom-gray h-14 cursor-pointer ${selectedIndex === index ? 'bg-gray-300 transition duration-500' : 'bg-white'}`} onClick={() => handleRowClick(index, tender)}>
-                                <td className='pl-4 flex flex-1 min-w-0 max-w-[1412px]'>
+                            <tr key={index} className={`hover:bg-gray-300 transition duration-300 h-14 cursor-pointer ${selectedIndex === index ? 'bg-gray-300 transition duration-500' : 'bg-white'}`} onClick={() => handleRowClick(index, tender)}>
+                                <td className='pl-4 py-4 flex flex-1 min-w-0 max-w-[1412px]'>
                                     <span className='text-ellipsis overflow-hidden whitespace-nowrap'>{tender.title}</span>
                                 </td>
                                 <td className='pr-4 w-32 text-right'>{tender.date}</td>

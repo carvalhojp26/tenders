@@ -90,10 +90,15 @@ export default function List ({tenders, currentPage, onPageChange, error, loadin
                     </div>
                     <div className='flex flex-col animate-fade-in'>
                         <SmallCard icon={<CiCalendarDate size='25' style={{ color: 'white' }} />} title='Date' content={selectedTender.date || 'unknown'} />
-                        <div className='flex flex-col'>
-                            <XSmallCard />
-                            <XSmallCard />
-                        </div>
+                        <button onClick={() => {
+                            if (selectedTender.srcURL) {
+                                window.location.href = selectedTender.srcURL;
+                            } else {
+                                console.error('No URL provided');
+                            }
+                        }} className="border border-custom-gray w-96 h-32 rounded-lg bg-custom-black p-2 flex m-4 text-white font-bold text-3xl flex items-center justify-center">
+                            Read More
+                        </button>
                     </div>
                 </div>
             ) : (
