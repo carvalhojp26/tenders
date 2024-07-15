@@ -7,10 +7,12 @@ interface PrivateRouteProps {
 };
 
 export default function PrivateRoute ({ children }: PrivateRouteProps) {
-    const auth = useAuth()
+    const { currentUser } = useAuth()
     const location = useLocation()
 
-    if (!auth || !auth.currentUser) {
+    console.log('Current user (PrivateRoute): ', currentUser)
+
+    if (!currentUser) {
         return <Navigate to='/signin' state={{from: location}} replace />
     }
 

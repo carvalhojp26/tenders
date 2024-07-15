@@ -19,7 +19,8 @@ export default function SignIn () {
     const handleSignIn = async () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password)
-            console.log(userCredential)
+            console.log('SignIn successful', userCredential)
+            console.log('Current User', currentUser)
             if (!currentUser) {
                 console.log('User is not yet set immediately after login');
             }

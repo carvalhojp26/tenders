@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { ExternalApiService } from './external-api/external-api.service';
 import { TendersController } from './tenders/tenders.controller';
 import { HttpModule } from '@nestjs/axios'
+import { TendersModule } from './tenders/tenders.module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [HttpModule, TendersModule],
   controllers: [AppController, TendersController],
   providers: [AppService, ExternalApiService],
 })

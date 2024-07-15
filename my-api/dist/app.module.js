@@ -13,12 +13,13 @@ const app_service_1 = require("./app.service");
 const external_api_service_1 = require("./external-api/external-api.service");
 const tenders_controller_1 = require("./tenders/tenders.controller");
 const axios_1 = require("@nestjs/axios");
+const tenders_module_1 = require("./tenders/tenders.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [axios_1.HttpModule],
+        imports: [axios_1.HttpModule, tenders_module_1.TendersModule],
         controllers: [app_controller_1.AppController, tenders_controller_1.TendersController],
         providers: [app_service_1.AppService, external_api_service_1.ExternalApiService],
     })

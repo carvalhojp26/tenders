@@ -3,7 +3,6 @@ import Pagination from './Pagination'
 import SmallCard from './SmallCard.tsx'
 import { MdAttachMoney } from "react-icons/md";
 import MediumCard from './MediumCard.tsx'
-import XSmallCard from './XSmallCard.tsx';
 import { useState, useEffect, useRef } from 'react'
 import { CiCalendarDate } from "react-icons/ci";
 import { PiProhibit } from "react-icons/pi";

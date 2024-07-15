@@ -20,6 +20,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, user => {
+            console.log('Auth state changed:', user)
             setCurrentUser(user);
             setLoading(false);
         });
@@ -28,7 +29,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     if (loading) {
-        return <div className='spinner'></div>;
+        return <div className='flex justify-center items-center spinner'></div>;
     }
 
     return (

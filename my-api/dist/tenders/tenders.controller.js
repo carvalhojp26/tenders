@@ -15,26 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TendersController = void 0;
 const common_1 = require("@nestjs/common");
 const external_api_service_1 = require("../external-api/external-api.service");
+const query_dto_1 = require("../dto/query.dto");
 let TendersController = class TendersController {
     constructor(externalApiService) {
         this.externalApiService = externalApiService;
     }
-    async getTendersData(country, page, title, category, date, value) {
-        const data = await this.externalApiService.fetchTendersData(country, page, title, category, date, value).toPromise();
-        return data;
+    async getTendersData(country, query) {
+        return await this.externalApiService.fetchTendersData(country, query.page, query.title, query.category, query.date, query.value);
     }
 };
 exports.TendersController = TendersController;
 __decorate([
     (0, common_1.Get)(':country'),
     __param(0, (0, common_1.Param)('country')),
-    __param(1, (0, common_1.Query)('page')),
-    __param(2, (0, common_1.Query)('title')),
-    __param(3, (0, common_1.Query)('category')),
-    __param(4, (0, common_1.Query)('date')),
-    __param(5, (0, common_1.Query)('value')),
+    __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number, String, String, String, String]),
+    __metadata("design:paramtypes", [String, query_dto_1.QueryDTO]),
     __metadata("design:returntype", Promise)
 ], TendersController.prototype, "getTendersData", null);
 exports.TendersController = TendersController = __decorate([
