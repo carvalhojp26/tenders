@@ -1,9 +1,12 @@
-import { IsInt, IsOptional, IsString, Min, IsIn, IsNotEmpty } from 'class-validator'
+import { Type } from 'class-transformer';
+import { IsInt, IsOptional, IsString, Min, IsIn } from 'class-validator'
 
 export class QueryDTO {
+
     @IsInt()
     @Min(1)
     @IsOptional()
+    @Type(() => Number)
     page?: number;
 
     @IsString()
