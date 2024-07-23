@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { TendersController } from "./tenders.controller";
 import { ExternalApiService } from "src/external-api/external-api.service";
 import { HttpModule } from "@nestjs/axios";

@@ -14,7 +14,13 @@ const external_api_service_1 = require("./external-api/external-api.service");
 const tenders_controller_1 = require("./tenders/tenders.controller");
 const axios_1 = require("@nestjs/axios");
 const tenders_module_1 = require("./tenders/tenders.module");
+const auth_middleware_1 = require("./middlewares/auth.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_middleware_1.AuthMiddleware)
+            .forRoutes({ path: '*', method: common_1.RequestMethod.ALL });
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
