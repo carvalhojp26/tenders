@@ -11,8 +11,14 @@ const common_1 = require("@nestjs/common");
 const firebase_admin_1 = require("firebase-admin");
 let AuthMiddleware = class AuthMiddleware {
     async use(req, res, next) {
+        if (!req.headers.authorization) {
+            throw new common_1.UnauthorizedException("Empty authorization header");
+        }
         if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
             const token = req.headers.authorization.split(' ')[1];
+            if (token === "") {
+                throw new common_1.UnauthorizedException("No token provided");
+            }
             try {
                 const decodedToken = await (0, firebase_admin_1.auth)().verifyIdToken(token);
                 req['user'] = decodedToken;
@@ -20,11 +26,11 @@ let AuthMiddleware = class AuthMiddleware {
             }
             catch (error) {
                 console.error(error);
-                res.status(401).json({ message: 'Unauthorized' });
+                throw new common_1.UnauthorizedException();
             }
         }
         else {
-            res.status(401).json({ message: 'Unauthorized' });
+            throw new common_1.UnauthorizedException();
         }
     }
 };
